@@ -9,16 +9,17 @@ def comparar_producto():
 
     # Buscar en Mercado Libre Chile
     url_ml = f"https://api.mercadolibre.com/sites/MLC/search?q={producto}&limit=5"
-    res_ml = requests.get(url_ml)
+    headers = {"User-Agent": "Mozilla/5.0"}
+    res_ml = requests.get(url_ml, headers=headers)
     datos_ml = res_ml.json()
 
     resultados = []
-    for item in datos_ml.get("results", []):
+    for articulo in datos_ml.get("results", []):
         resultados.append({
-            "titulo": item.get("title", ""),
-            "precio": item.get("price", 0),
-            "ventas": item.get("sold_quantity", 0),
-            "link": item.get("permalink", "")
+            "titulo": articulo.get("title", ""),
+            "precio": articulo.get("price", 0),
+            "ventas": articulo.get("sold_quantity", 0),
+            "enlace": articulo.get("permalink", "")
         })
 
     return jsonify({
