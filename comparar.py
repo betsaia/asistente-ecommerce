@@ -1,12 +1,12 @@
-from flask import Blueprint, request, jsonify
+from flask import Flask, request, jsonify
 import requests
 
-app = Blueprint('comparar', __name__)
+app = Flask(__name__)
 
 @app.route('/comparar-producto', methods=['GET'])
 def comparar_producto():
     producto = request.args.get('q', '')
-    
+
     # Buscar en Mercado Libre Chile
     url_ml = f"https://api.mercadolibre.com/sites/MLC/search?q={producto}&limit=5"
     res_ml = requests.get(url_ml)
